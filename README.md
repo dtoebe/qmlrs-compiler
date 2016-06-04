@@ -15,4 +15,8 @@ Everything at this point is subject to change.
 [] Compile images with rust binaries
 [] See where this takes me...
 
+### Contributing:
 
+Like I said I am very new to Rust, and will take any suggestions on how to move this project forward, or how I can improve my code.
+
+_Side note: For those thinking to get started with Rust, or new to it.  Once you get past fighting with rustc over ownership issues, and begin to understand it.  Rust is a blast to write. And the community is awesome.  **I highly recommend it**_
