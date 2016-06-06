@@ -14,7 +14,7 @@ impl Utils {
     fn open_files(path: &str) -> File {
         match File::open(path) {
             Ok(file) => file,
-            Err(_) => panic!("Unable to open file"),
+            Err(e) => panic!("Unable to open {}: {}", path, e),
         }
     }
     // Reads the lines of the file and puts it in a Vec<String>

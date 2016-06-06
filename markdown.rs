@@ -47,14 +47,9 @@ Q_OBJECT! {Markdown:
 }
 
 fn main() {
-    let home = env::home_dir();
-    let ui_path = Path::join(&home.unwrap(), ".config/rustdown/ui/main.qml");
-
     let mut engine = qmlrs::Engine::new();
 
     engine.set_property("markdown", Markdown);
-
-    engine.load_local_file("/home/dtoebe/.config/rustdown/ui/main.qml");
-
+    engine.load_local_file("main.qml");
     engine.exec();
 }

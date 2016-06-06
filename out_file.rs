@@ -47,35 +47,31 @@ Q_OBJECT! {Markdown:
 }
 
 fn main() {
-    let home = env::home_dir();
-    let ui_path = Path::join(&home.unwrap(), ".config/rustdown/ui/main.qml");
-
     let mut engine = qmlrs::Engine::new();
 
     engine.set_property("markdown", Markdown);
-
 let mut qml_string: String = String::from(" \
-import QtQuick 2.3 \
-import QtQuick.Controls 1.4 \
-import QtQuick.Layouts 1.3 \
+import QtQuick 2.3; \
+import QtQuick.Controls 1.4; \
+import QtQuick.Layouts 1.2; \
  \
 ApplicationWindow { \
-    width: 640 \
-    height: 480 \
-    color: \"#f1f1f1\" \
-    visible: true \
-    title: \"RustDown\" \
+    width: 640; \
+    height: 480; \
+    color: \"#f1f1f1\"; \
+    visible: true; \
+    title: \"RustDown\"; \
  \
     toolBar: ToolBar { \
-        width: parent.width \
+        width: parent.width; \
  \
         RowLayout { \
-            width: parent.widtht \
-            height: parent.height \
+            width: parent.widtht; \
+            height: parent.height; \
  \
             Button { \
-                Layout.alignment: Qt.AlignRight \
-                text: \"Copy To HTML\" \
+                Layout.alignment: Qt.AlignRight; \
+                text: \"Copy To HTML\"; \
  \
                 onClicked: markdown.copy_to_clipboard(mdarea.text); \
             } \
@@ -83,27 +79,27 @@ ApplicationWindow { \
     } \
  \
     RowLayout { \
-        width: parent.width \
-        height: parent.height \
+        width: parent.width; \
+        height: parent.height; \
  \
         TextArea { \
-            id: mdarea \
-            Layout.alignment: Qt.AlignCenter \
-            Layout.preferredWidth: (parent.width / 2) - 2 \
-            Layout.preferredHeight: parent.height - 5 \
-            text: \"Markdown\" \
+            id: mdarea; \
+            Layout.alignment: Qt.AlignCenter; \
+            Layout.preferredWidth: (parent.width / 2) - 2; \
+            Layout.preferredHeight: parent.height - 5; \
+            text: \"Markdown\"; \
  \
             Keys.onReleased: rtarea.text = markdown.sync(mdarea.text); \
  \
         } \
  \
         TextArea { \
-            id: rtarea \
-            Layout.alignment: Qt.AlignCenter \
-            Layout.preferredWidth: (parent.width / 2) - 2 \
-            Layout.preferredHeight: parent.height - 5 \
-            textFormat: TextEdit.RichText \
-            text: \"Rich Text\" \
+            id: rtarea; \
+            Layout.alignment: Qt.AlignCenter; \
+            Layout.preferredWidth: (parent.width / 2) - 2; \
+            Layout.preferredHeight: parent.height - 5; \
+            textFormat: TextEdit.RichText; \
+            text: \"Rich Text\"; \
  \
             onActiveFocusChanged: { \
                 if(!activeFocus) { \
@@ -117,6 +113,5 @@ ApplicationWindow { \
         } \
     } \
 } \
-");engine.load_data(&qml_string);
-    engine.exec();
+");engine.load_data(&qml_string);    engine.exec();
 }
