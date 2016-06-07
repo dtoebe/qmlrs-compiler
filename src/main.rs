@@ -1,3 +1,8 @@
+extern crate getopts;
+
+use getopts::Options;
+
+use std::env;
 use std::fs::File;
 use std::io::BufReader;
 use std::io::BufRead;
@@ -210,7 +215,42 @@ impl RustOutFile {
         }
     }
 }
+
+fn help_txt(program: &str, opts: Options) {
+    let desc = format!("QMLRS COMPILER:\n\tTo compile a specific Rust file:\n\t <{0}> -f \
+                        [FILENAME]\n\n\tTo compile a specific project:\n\t <{0}> -d \
+                        [PATH]\n\n\tTo compile current working directory:\n\t <{0}> \n\n",
+                       program);
+    println!("{}", opts.usage(&desc));
+    std::process::exit(0);
+}
+
+fn get_opts() {
+    let args: Vec<String> = env::args().collect();
+    let mut opts = Options::new();
+    let program = args[0].clone();
+
+    opts.optopt("f",
+                "file",
+                "Set Main Rust.rs file to be compiled.",
+                "FILENAME");
+    opts.optflag("h", "help", "Shows this help menu");
+
+    let matches = match opts.parse(&args[1..]) {
+        Ok(m) => m,
+        Err(e) => panic!("{}", e.to_string()),
+    };
+
+    if matches.opt_present("h") {
+        help_txt(&program, opts);
+    }
+}
+
 fn main() {
+
+    get_opts();
+    return;
+
     // TODO: get files either automagically or via cli opts.
     let rust_files = RustInFiles::new("test-files/markdown.rs");
     let qml_file = QmlInFile::new(rust_files.split_line().as_str());
