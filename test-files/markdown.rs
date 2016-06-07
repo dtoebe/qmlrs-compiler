@@ -50,6 +50,6 @@ fn main() {
     let mut engine = qmlrs::Engine::new();
 
     engine.set_property("markdown", Markdown);
-    engine.load_local_file("main.qml");
+    engine.load_local_file("test-files/main.qml");
     engine.exec();
 }

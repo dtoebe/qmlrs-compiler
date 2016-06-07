@@ -215,9 +215,10 @@ impl RustOutFile {
 }
 fn main() {
     // TODO: get files either automagically or via cli opts.
-    let rust_files = RustInFiles::new("markdown.rs");
+    let rust_files = RustInFiles::new("test-files/markdown.rs");
     let qml_file = QmlInFile::new(rust_files.split_line().as_str());
-    let mut out_file = RustOutFile::new(rust_files, qml_file, String::from("out_file.rs"));
+    let mut out_file =
+        RustOutFile::new(rust_files, qml_file, String::from("test-files/out_file.rs"));
     out_file.add_qml();
     out_file.write_rustfile();
 
