@@ -11,9 +11,11 @@ Everything at this point is subject to change.
 
 ### What I would like to do:
 
-[] Compile QML files into Rust binaries
-[] Compile images with rust binaries
-[] See where this takes me...
+- [  ] Compile QML files into Rust binaries
+- [  ] Compile images with rust binaries
+- [  ] See where this takes me...
+
+- [  ] Also see if there is a way I can compile from a buffer instead of writing files, then compiling...
 
 ### Contributing:
 
