@@ -3,11 +3,11 @@ import QtQuick.Controls 1.4;
 import QtQuick.Layouts 1.2;
 
 ApplicationWindow {
-    width: 640;
-    height: 480;
-    color: "#f1f1f1";
-    visible: true;
-    title: "RustDown";
+    width: 640
+    height: 480
+    color: "#f1f1f1"
+    visible: true
+    title: "RustDown"
 
     toolBar: ToolBar {
         width: parent.width;

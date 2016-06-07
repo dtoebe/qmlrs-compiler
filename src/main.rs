@@ -6,6 +6,7 @@ use std::io::BufReader;
 use std::io::BufRead;
 use std::io::Write;
 use std::path::Path;
+use std::ops::Add;
 
 // Basic io Utils used
 struct Utils;
@@ -103,6 +104,28 @@ impl QmlInFile {
     }
 }
 
+// TODO: I think this is very ugly
+fn format_str(s: String) -> String {
+    let ss: &str = &*s.clone();
+    let mut dummy_string: String = ss.clone().to_string();
+    let mut second_dummy: String = String::new();
+    if ss.contains("\"") {
+        second_dummy = dummy_string.replace("\"", "\\\"").clone();
+    } else {
+        second_dummy = dummy_string.clone();
+    }
+    if ss != "" {
+        let ss_char: Vec<char> = ss.chars().rev().take(1).collect();
+        println!("{:?}", ss_char);
+        if ss_char[0] != '{' && ss_char[0] != '}' && ss_char[0] != ';' {
+            dummy_string = format!("{}{}", second_dummy, ";");
+        } else {
+            dummy_string = String::from(second_dummy);
+        }
+    }
+    dummy_string
+}
+
 // Struct for the output file
 // TODO: Not actually output file, but compile from buffer if possible
 struct RustOutFile {
@@ -118,6 +141,29 @@ impl RustOutFile {
             path: path,
         }
     }
+    // formats each string of the QML file
+    // TODO: I think this is very ugly
+    fn format_str(&self, s: String) -> String {
+        let ss: &str = &*s.clone();
+        let mut dummy_string: String = ss.clone().to_string();
+        let mut second_dummy: String = String::new();
+        if ss.contains("\"") {
+            second_dummy = dummy_string.replace("\"", "\\\"").clone();
+        } else {
+            second_dummy = dummy_string.clone();
+        }
+        if ss != "" {
+            let ss_char: Vec<char> = ss.chars().rev().take(1).collect();
+            println!("{:?}", ss_char);
+            if ss_char[0] != '{' && ss_char[0] != '}' && ss_char[0] != ';' {
+                dummy_string = format!("{}{}", second_dummy, ";");
+            } else {
+                dummy_string = String::from(second_dummy);
+            }
+        }
+        dummy_string
+    }
+
 
     // Inputs QML String just above `load_local_file` then changes that line to load_data
     fn add_qml(&mut self) {
@@ -131,12 +177,9 @@ impl RustOutFile {
                 for ql in self.qml_files.file_data.contents.iter() {
                     let mut new_qml_string: String = String::new();
                     let qs: String = ql.clone();
-                    let s: &str = qs.as_str();
-                    if s.contains("\"") {
-                        new_qml_string = String::from(s.replace("\"", "\\\""));
-                    } else {
-                        new_qml_string = ql.clone();
-                    }
+                    let mut s: &str = qs.as_str();
+                    new_qml_string = String::from(s);
+                    new_qml_string = self.format_str(new_qml_string);
                     new_rust.push(new_qml_string);
                     new_rust.push(String::from(" \\\n"));
 
@@ -178,5 +221,5 @@ fn main() {
     out_file.add_qml();
     out_file.write_rustfile();
 
-    println!("{:?}", out_file.rust_files.file_data.contents);
+    // println!("{:?}", out_file.rust_files.file_data.contents);
 }
